@@ -1,0 +1,1 @@
+Inventofree-Admin an open sourced inventory admin site based from [Admin One Tailwind](https://github.com/justboil/admin-one-tailwind)
