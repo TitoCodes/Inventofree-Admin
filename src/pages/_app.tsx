@@ -51,7 +51,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
             <meta property="twitter:image:width" content={imageWidth} />
             <meta property="twitter:image:height" content={imageHeight} />
 
-            <link rel="icon" href="/inventofree-admin/favicon.png" />
+            <link rel="icon" href="https://titocodes.com/favicon.ico" />
           </Head>
 
           {/* <Script
