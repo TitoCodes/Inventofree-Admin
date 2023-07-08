@@ -22,7 +22,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
 
   const title = `Inventofree Admin`
 
-  const description = 'Inventofree Admin - free inventory management system'
+  const description = 'Inventofree - Admin - free inventory management system'
 
   const url = 'https://inventofree.titocodes.com'
 
@@ -38,7 +38,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
             <meta name="description" content={description} />
 
             <meta property="og:url" content={url} />
-            <meta property="og:site_name" content="JustBoil.me" />
+            <meta property="og:site_name" content="titocodes.com" />
             <meta property="og:title" content={title} />
             <meta property="og:description" content={description} />
             <meta property="og:image:type" content="image/png" />

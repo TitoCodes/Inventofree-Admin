@@ -1,6 +1,5 @@
 import React, { ReactNode } from 'react'
 import { containerMaxW } from '../config'
-import JustboilLogo from './JustboilLogo'
 
 type Props = {
   children: ReactNode
@@ -16,14 +15,14 @@ export default function FooterBar({ children }: Props) {
           <b>
             &copy;{year},{` `}
             <a href="https://inventofree.com/" rel="noreferrer" target="_blank">
-              Iventofree
+              Inventofree - Admin
             </a>
           </b>
           {` `}
           {children}
         </div>
         <div className="md:py-2">
-          <a href="https://justboil.me" rel="noreferrer" target="_blank">
+          <a href="https://titocodes.com" rel="noreferrer" target="_blank">
             {/* Inventofree Logo Here */}
           </a>
         </div>
