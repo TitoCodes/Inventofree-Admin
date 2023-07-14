@@ -5,7 +5,7 @@ import { ReactElement } from 'react'
 import BaseButton from '../components/BaseButton'
 import BaseButtons from '../components/BaseButtons'
 import BaseDivider from '../components/BaseDivider'
-import CardBox from '../components/CardBox'
+import CardBox from '../components/CardBox/CardBox'
 import FormCheckRadio from '../components/FormCheckRadio'
 import FormCheckRadioGroup from '../components/FormCheckRadioGroup'
 import FormField from '../components/FormField'
@@ -71,8 +71,8 @@ const FormsPage = () => {
 
               <BaseDivider />
 
-              <FormField label="Textarea" hasTextareaHeight>
-                <Field name="textarea" as="textarea" placeholder="Your text here" />
+              <FormField label="Detail" hasTextareaHeight>
+                <Field name="detail" as="textarea" placeholder="Your text here" />
               </FormField>
 
               <BaseDivider />

@@ -1,10 +1,10 @@
 import { mdiEye, mdiTrashCan } from '@mdi/js'
 import React, { useState, useEffect } from 'react'
-import { getCategories } from '../hooks/categoriesData'
-import { Category } from '../interfaces'
-import BaseButton from './BaseButton'
-import BaseButtons from './BaseButtons'
-import CardBoxModal from './CardBoxModal'
+import { getCategories } from '../../hooks/categoriesData'
+import { Category } from '../../interfaces'
+import BaseButton from '../BaseButton'
+import BaseButtons from '../BaseButtons'
+import CardBoxModal from '../CardBox/CardBoxModal'
 
 const TableCategories = () => {
   const { categories } = getCategories()

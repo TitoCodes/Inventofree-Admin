@@ -1,5 +1,6 @@
 import axios from 'axios'
-export default async function AuditTrails(req, res) {
+
+export default async function AddItems(req, res) {
   try {
     const https = require('https')
     const agent = new https.Agent({
@@ -7,7 +8,7 @@ export default async function AuditTrails(req, res) {
     })
 
     return axios
-      .get(process.env.API_URL + '/api/audit-trails', { httpsAgent: agent })
+      .post(process.env.API_URL + '/api/items', req.body, { httpsAgent: agent })
       .then(function (response) {
         res.status(200).json(response.data)
       })

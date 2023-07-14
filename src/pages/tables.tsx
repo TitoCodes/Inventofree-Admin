@@ -2,7 +2,7 @@ import { mdiGithub, mdiMonitorCellphone, mdiTableBorder, mdiTableOff } from '@md
 import Head from 'next/head'
 import React, { ReactElement } from 'react'
 import BaseButton from '../components/BaseButton'
-import CardBox from '../components/CardBox'
+import CardBox from '../components/CardBox/CardBox'
 import CardBoxComponentEmpty from '../components/CardBoxComponentEmpty'
 import LayoutAuthenticated from '../layouts/Authenticated'
 import NotificationBar from '../components/NotificationBar'

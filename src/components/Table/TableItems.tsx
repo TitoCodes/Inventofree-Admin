@@ -1,29 +1,30 @@
-import { mdiEye, mdiTrashCan } from '@mdi/js'
+import { mdiEye, mdiPlus, mdiTrashCan, mdiPencil, mdiPen } from '@mdi/js'
 import React, { useState, useEffect } from 'react'
-import { getItems } from '../hooks/itemsData'
-import { Item } from '../interfaces'
-import BaseButton from './BaseButton'
-import BaseButtons from './BaseButtons'
-import CardBoxModal from './CardBoxModal'
+import { getItems } from '../../hooks/itemsData'
+import { Item } from '../../interfaces'
+import BaseButton from '../BaseButton'
+import BaseButtons from '../BaseButtons'
+import CardBoxModal from '../CardBox/CardBoxModal'
+import CardBoxEditModal from '../CardBox/CardBoxEditModal'
 
-const Tableitems = () => {
-  const { items } = getItems()
+const Tableitems = ({ data }) => {
+  //setCurrentItems(items);
+  // const perPage = 5
 
-  const perPage = 5
+  // const [currentPage, setCurrentPage] = useState(0)
 
-  const [currentPage, setCurrentPage] = useState(0)
+  // const clientsPaginated = items.slice(perPage * currentPage, perPage * (currentPage + 1))
 
-  const clientsPaginated = items.slice(perPage * currentPage, perPage * (currentPage + 1))
+  // const numPages = items.length / perPage
 
-  const numPages = items.length / perPage
+  // const pagesList = []
 
-  const pagesList = []
-
-  for (let i = 0; i < items.length; i++) {
-    pagesList.push(i)
-  }
+  // for (let i = 0; i < items.length; i++) {
+  //   pagesList.push(i)
+  // }
 
   const [isModalInfoActive, setIsModalInfoActive] = useState(false)
+  const [isEditModalInfoActive, setEditModalActive] = useState(false)
   const [isModalTrashActive, setIsModalTrashActive] = useState(false)
 
   const handleModalAction = () => {
@@ -33,11 +34,11 @@ const Tableitems = () => {
 
   return (
     <>
-      <CardBoxModal
-        title="Sample modal"
+      <CardBoxEditModal
+        title="Edit item"
         buttonColor="info"
         buttonLabel="Done"
-        isActive={isModalInfoActive}
+        isActive={isEditModalInfoActive}
         onConfirm={handleModalAction}
         onCancel={handleModalAction}
       >
@@ -45,8 +46,7 @@ const Tableitems = () => {
           Lorem ipsum dolor sit amet <b>adipiscing elit</b>
         </p>
         <p>This is sample modal</p>
-      </CardBoxModal>
-
+      </CardBoxEditModal>
       <CardBoxModal
         title="Please confirm"
         buttonColor="danger"
@@ -60,7 +60,6 @@ const Tableitems = () => {
         </p>
         <p>This is sample modal</p>
       </CardBoxModal>
-
       <table>
         <thead>
           <tr>
@@ -73,7 +72,7 @@ const Tableitems = () => {
           </tr>
         </thead>
         <tbody>
-          {items.map((item: Item) => (
+          {data.map((item: Item) => (
             <tr key={item.id}>
               <td data-label="Id">{item.id}</td>
               <td data-label="Name">{item.name}</td>
@@ -87,8 +86,8 @@ const Tableitems = () => {
                 <BaseButtons type="justify-start lg:justify-end" noWrap>
                   <BaseButton
                     color="info"
-                    icon={mdiEye}
-                    onClick={() => setIsModalInfoActive(true)}
+                    icon={mdiPencil}
+                    onClick={() => setEditModalActive(true)}
                     small
                   />
                   <BaseButton

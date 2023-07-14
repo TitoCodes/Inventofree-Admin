@@ -57,7 +57,7 @@ export type Transaction = {
 }
 
 export type Category = {
-  id:number
+  id: number
   name: string
   description: string
   createdDate: string
@@ -67,14 +67,14 @@ export type Category = {
 }
 
 export type AuditTrail = {
-  id:number
+  id: number
   action: string
   details: string
   createdBy: number
 }
 
 export type Item = {
-  id:number
+  id: number
   name: string
   detail: string
   category: Category
@@ -85,8 +85,17 @@ export type Item = {
   updatedBy: number
 }
 
+export type AddItem = {
+  name?: string
+  detail?: string
+  categoryId?: Category
+  price?: Price
+  createdBy?: number
+}
+
 export type Price = {
-  amount:number
+  currencyType: number
+  amount: number
 }
 
 export type StyleKey = 'white' | 'basic'

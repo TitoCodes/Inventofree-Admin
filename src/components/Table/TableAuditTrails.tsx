@@ -1,10 +1,10 @@
 import { mdiEye, mdiTrashCan } from '@mdi/js'
 import React, { useState, useEffect } from 'react'
-import { getAuditTrails } from '../hooks/auditTrailsData'
-import { AuditTrail, Item } from '../interfaces'
-import BaseButton from './BaseButton'
-import BaseButtons from './BaseButtons'
-import CardBoxInfo from './CardBoxInfo'
+import { getAuditTrails } from '../../hooks/auditTrailsData'
+import { AuditTrail, Item } from '../../interfaces'
+import BaseButton from '../BaseButton'
+import BaseButtons from '../BaseButtons'
+import CardBoxInfo from '../CardBox/CardBoxInfo'
 
 const TableAuditTrails = () => {
   
