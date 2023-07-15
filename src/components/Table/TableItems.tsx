@@ -1,36 +1,39 @@
-import { mdiEye, mdiPlus, mdiTrashCan, mdiPencil, mdiPen } from '@mdi/js'
-import React, { useState, useEffect } from 'react'
-import { getItems } from '../../hooks/itemsData'
-import { Item } from '../../interfaces'
+import { mdiTrashCan, mdiPencil } from '@mdi/js'
+import React, { useState } from 'react'
+import { Item, UpdateItem } from '../../interfaces'
 import BaseButton from '../BaseButton'
 import BaseButtons from '../BaseButtons'
 import CardBoxModal from '../CardBox/CardBoxModal'
 import CardBoxEditModal from '../CardBox/CardBoxEditModal'
+import FormField from '../FormField'
+import { Formik, Form, Field } from 'formik'
+import { getCategories } from '../../hooks/categoriesData'
+import BaseDivider from '../BaseDivider'
 
-const Tableitems = ({ data }) => {
-  //setCurrentItems(items);
-  // const perPage = 5
-
-  // const [currentPage, setCurrentPage] = useState(0)
-
-  // const clientsPaginated = items.slice(perPage * currentPage, perPage * (currentPage + 1))
-
-  // const numPages = items.length / perPage
-
-  // const pagesList = []
-
-  // for (let i = 0; i < items.length; i++) {
-  //   pagesList.push(i)
-  // }
-
-  const [isModalInfoActive, setIsModalInfoActive] = useState(false)
+const Tableitems = ({ data, onUpdateSave }) => {
   const [isEditModalInfoActive, setEditModalActive] = useState(false)
   const [isModalTrashActive, setIsModalTrashActive] = useState(false)
+  const [editItem, setEditItem] = useState<UpdateItem>({})
 
   const handleModalAction = () => {
-    setIsModalInfoActive(false)
     setIsModalTrashActive(false)
   }
+
+  const handleEditItem = (item: Item) => {
+    setEditModalActive(true)
+    setEditItem(item)
+  }
+
+  const handleCancelAction = () => {
+    setEditModalActive(false)
+  }
+
+  const handleSave = (item: UpdateItem) => {
+    onUpdateSave(item)
+    setEditModalActive(false)
+  }
+
+  const { categories } = getCategories()
 
   return (
     <>
@@ -40,12 +43,48 @@ const Tableitems = ({ data }) => {
         buttonLabel="Done"
         isActive={isEditModalInfoActive}
         onConfirm={handleModalAction}
-        onCancel={handleModalAction}
+        onCancel={handleCancelAction}
       >
-        <p>
-          Lorem ipsum dolor sit amet <b>adipiscing elit</b>
-        </p>
-        <p>This is sample modal</p>
+        <Formik initialValues={editItem} onSubmit={(item) => handleSave(item)}>
+          <Form>
+            <FormField label="Name" labelFor="name">
+              <Field name="name" placeholder="Item Name" id="name" />
+            </FormField>
+
+            <FormField label="Category" labelFor="category">
+              <Field name="categoryId" id="id" component="select">
+                <option value="" selected disabled>
+                  Select an option
+                </option>
+                {categories.map((category, index) => (
+                  <option key={index} value={category.id}>
+                    {category.name}
+                  </option>
+                ))}
+              </Field>
+            </FormField>
+
+            <BaseDivider />
+
+            <FormField label="Detail" hasTextareaHeight>
+              <Field name="detail" as="textarea" placeholder="Item Details" />
+            </FormField>
+
+            <FormField label="Amount" labelFor="amount">
+              <Field name="price.amount" placeholder="Amount" id="price.amount" />
+            </FormField>
+            <BaseButtons>
+              <BaseButton color="info" label="Save" type="submit" />
+              <BaseButton
+                type="cancel"
+                color="info"
+                outline
+                label="Cancel"
+                onClick={handleCancelAction}
+              />
+            </BaseButtons>
+          </Form>
+        </Formik>
       </CardBoxEditModal>
       <CardBoxModal
         title="Please confirm"
@@ -87,7 +126,7 @@ const Tableitems = ({ data }) => {
                   <BaseButton
                     color="info"
                     icon={mdiPencil}
-                    onClick={() => setEditModalActive(true)}
+                    onClick={() => handleEditItem(item)}
                     small
                   />
                   <BaseButton

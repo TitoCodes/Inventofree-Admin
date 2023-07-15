@@ -1,9 +1,9 @@
 import { mdiClose } from '@mdi/js'
 import React, { ReactNode, useState } from 'react'
-import { ColorKey } from '../interfaces'
-import { colorsBgLight, colorsOutline } from '../colors'
-import BaseButton from './BaseButton'
-import BaseIcon from './BaseIcon'
+import { ColorKey } from '../../interfaces'
+import { colorsBgLight, colorsOutline } from '../../colors'
+import BaseButton from '../BaseButton'
+import BaseIcon from '../BaseIcon'
 
 type Props = {
   color: ColorKey
@@ -14,7 +14,7 @@ type Props = {
   isActive?:boolean
 }
 
-const NotificationBar = ({ outline = false, children, ...props }: Props) => {
+const NotificationBase = ({ outline = false, children, ...props }: Props) => {
 
   if (!props.isActive) {
     return null
@@ -60,4 +60,4 @@ const NotificationBar = ({ outline = false, children, ...props }: Props) => {
   )
 }
 
-export default NotificationBar
+export default NotificationBase

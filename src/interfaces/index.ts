@@ -93,6 +93,14 @@ export type AddItem = {
   createdBy?: number
 }
 
+export type UpdateItem = {
+  id?:number
+  name?: string
+  detail?: string
+  price?: Price
+  createdBy?: number
+}
+
 export type Price = {
   currencyType: number
   amount: number

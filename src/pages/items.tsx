@@ -1,4 +1,4 @@
-import { mdiPlus, mdiRefresh } from '@mdi/js'
+import { mdiPlus, mdiCheckCircle, mdiAlert } from '@mdi/js'
 import Head from 'next/head'
 import React, { ReactElement, useEffect, useState } from 'react'
 import CardBox from '../components/CardBox/CardBox'
@@ -8,16 +8,60 @@ import TableItems from '../components/Table/TableItems'
 import { getPageTitle } from '../config'
 import BaseButton from '../components/BaseButton'
 import CardBoxAddItemForm from '../components/CardBox/CardBoxAddItemForm'
-import { getItems } from '../hooks/itemsData'
-import { AddItem } from '../interfaces'
+import { UpdateItem } from '../interfaces'
+import NotificationBar from '../components/NotificationBar'
+import axios from 'axios'
+import NotificationError from '../components/Notification/NotificationError'
+import NotificationSuccess from '../components/Notification/NotificationSuccess'
 
 const TablesPage = () => {
   const [isModalAddItemActive, setIsModalAddItemActive] = useState(false)
   const [currentItems, setCurrentItems] = useState([])
+  const [showSuccessNotification, setShowSuccessNotification] = useState(false)
+  const [showErrorNotification, setShowErroNotification] = useState(false)
+  const [errorMessages, setErrorMessages] = useState([])
+  const [updatedItem, setUpdatedItem] = useState(null)
+
+  const handleUpdateItemSave = async (item: UpdateItem) => {
+    await axios
+      .put('/inventofree-admin/api/items/update', item)
+      .then((result: any) => {
+        if (result.status == 200) {
+          fetchRecords()
+          setShowSuccessNotification(true)
+          setUpdatedItem(item.name)
+        } else {
+          setShowErroNotification(true)
+          setErrorMessages(result.response.data)
+        }
+      })
+      .catch((error) => {
+        setShowErroNotification(true)
+        setErrorMessages(error.response.data)
+      })
+  }
 
   useEffect(() => {
     fetchRecords()
   }, [])
+
+  useEffect(() => {
+    if (showSuccessNotification) {
+      const timer = setTimeout(() => {
+        setShowSuccessNotification(false)
+      }, 3000)
+      return () => clearTimeout(timer)
+    }
+  }, [showSuccessNotification])
+
+  useEffect(() => {
+    if (showErrorNotification) {
+      const timer = setTimeout(() => {
+        setShowErroNotification(false)
+      }, 8000)
+      return () => clearTimeout(timer)
+    }
+  }, [showErrorNotification])
 
   const fetchRecords = async () => {
     try {
@@ -40,18 +84,20 @@ const TablesPage = () => {
 
   return (
     <>
-      <CardBoxAddItemForm
-        title="Add Item"
-        isActive={isModalAddItemActive}
-        onCancel={() => setIsModalAddItemActive(false)}
-        onCloseAndRefresh={() => handleCloseAndRefresh()}
-      />
-
       <Head>
         <title>{getPageTitle('Items')}</title>
       </Head>
       <SectionMain>
-        <h2 className="text-xl font-bold p-5">Items</h2>
+        <NotificationSuccess isActive={showSuccessNotification} data={updatedItem} />
+        <NotificationError errorMessages={errorMessages} isActive={showErrorNotification} />
+        <CardBoxAddItemForm
+          title="Add Item"
+          isActive={isModalAddItemActive}
+          onCancel={() => setIsModalAddItemActive(false)}
+          onCloseAndRefresh={() => handleCloseAndRefresh()}
+        />
+
+        <h2 className="text-xl font-bold pb-3">Items</h2>
         <BaseButton
           color="info"
           label="Add Item"
@@ -61,7 +107,7 @@ const TablesPage = () => {
           className="mb-5"
         />
         <CardBox className="mb-6" hasTable>
-          <TableItems data={currentItems} />
+          <TableItems data={currentItems} onUpdateSave={handleUpdateItemSave} />
         </CardBox>
       </SectionMain>
     </>
