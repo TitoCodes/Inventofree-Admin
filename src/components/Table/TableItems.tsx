@@ -10,11 +10,12 @@ import { Formik, Form, Field } from 'formik'
 import { getCategories } from '../../hooks/categoriesData'
 import BaseDivider from '../Divider/BaseDivider'
 
-const Tableitems = ({ data, onUpdateSave }) => {
+const Tableitems = ({ data, onUpdateSave, onConfirmDelete }) => {
   const [isEditModalInfoActive, setEditModalActive] = useState(false)
   const [isModalTrashActive, setIsModalTrashActive] = useState(false)
   const [editItem, setEditItem] = useState<UpdateItem>({})
-
+  const [itemIdToDelete, setitemIdToDelete] = useState(null)
+  const [deleteConfirmationMessage, setDeleteConfirmationMessage] = useState(null)
   const handleModalAction = () => {
     setIsModalTrashActive(false)
   }
@@ -31,6 +32,17 @@ const Tableitems = ({ data, onUpdateSave }) => {
   const handleSave = (item: UpdateItem) => {
     onUpdateSave(item)
     setEditModalActive(false)
+  }
+
+  const handleDelete = (itemId: number) => {
+    setIsModalTrashActive(true)
+    setitemIdToDelete(itemId)
+    setDeleteConfirmationMessage('Are you sure you want to delete item:' + itemId)
+  }
+
+  const handleOnConfirmDelete = (itemId:number) =>{
+    onConfirmDelete(itemId)
+    setIsModalTrashActive(false)
   }
 
   const { categories } = getCategories()
@@ -91,13 +103,10 @@ const Tableitems = ({ data, onUpdateSave }) => {
         buttonColor="danger"
         buttonLabel="Confirm"
         isActive={isModalTrashActive}
-        onConfirm={handleModalAction}
+        onConfirm={() => handleOnConfirmDelete(itemIdToDelete)}
         onCancel={handleModalAction}
       >
-        <p>
-          Lorem ipsum dolor sit amet <b>adipiscing elit</b>
-        </p>
-        <p>This is sample modal</p>
+        <p>{deleteConfirmationMessage}</p>
       </CardBoxModal>
       <table>
         <thead>
@@ -132,7 +141,7 @@ const Tableitems = ({ data, onUpdateSave }) => {
                   <BaseButton
                     color="danger"
                     icon={mdiTrashCan}
-                    onClick={() => setIsModalTrashActive(true)}
+                    onClick={(itemId) => handleDelete(item.id)}
                     small
                   />
                 </BaseButtons>

@@ -42,6 +42,25 @@ const TablesPage = () => {
       })
   }
 
+  const handleDelete = async (itemId: number) => {
+    await axios
+      .delete('/inventofree-admin/api/items/delete/' + itemId)
+      .then((result: any) => {
+        if (result.status == 200) {
+          fetchRecords()
+          setShowSuccessNotification(true)
+          setSuccessNotificationMessage('Successfully deleted item Id:' + itemId)
+        } else {
+          setShowErroNotification(true)
+          setErrorMessages(result.response.data)
+        }
+      })
+      .catch((error) => {
+        setShowErroNotification(true)
+        setErrorMessages(error.response.data)
+      })
+  }
+
   async function handleAddItemSave(itemToAdd: AddItem) {
     await axios
       .post('/inventofree-admin/api/items/add', itemToAdd)
@@ -132,7 +151,7 @@ const TablesPage = () => {
           className="mb-5"
         />
         <CardBox className="mb-6" hasTable>
-          <TableItems data={currentItems} onUpdateSave={handleUpdateItemSave} />
+          <TableItems data={currentItems} onUpdateSave={handleUpdateItemSave} onConfirmDelete={handleDelete} />
         </CardBox>
       </SectionMain>
     </>
