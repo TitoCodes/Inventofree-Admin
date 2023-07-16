@@ -1,8 +1,8 @@
 import { mdiCog } from '@mdi/js'
 import React, { Children, ReactNode } from 'react'
-import BaseButton from './BaseButton'
-import BaseIcon from './BaseIcon'
-import IconRounded from './IconRounded'
+import BaseButton from '../Button/BaseButton'
+import BaseIcon from '../Icon/BaseIcon'
+import IconRounded from '../Icon/IconRounded'
 
 type Props = {
   icon: string

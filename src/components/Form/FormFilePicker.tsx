@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { ColorButtonKey } from '../interfaces'
-import BaseButton from './BaseButton'
+import { ColorButtonKey } from '../../interfaces'
+import BaseButton from '../Button/BaseButton'
 
 type Props = {
   label?: string

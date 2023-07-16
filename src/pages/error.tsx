@@ -1,7 +1,7 @@
 import React from 'react'
 import type { ReactElement } from 'react'
 import Head from 'next/head'
-import BaseButton from '../components/BaseButton'
+import BaseButton from '../components/Button/BaseButton'
 import CardBox from '../components/CardBox/CardBox'
 import SectionFullScreen from '../components/SectionFullScreen'
 import LayoutGuest from '../layouts/Guest'

@@ -1,9 +1,9 @@
 import { mdiClose } from '@mdi/js'
 import { ReactNode } from 'react'
-import BaseButton from '../BaseButton'
+import BaseButton from '../Button/BaseButton'
 import CardBox from './CardBox'
 import CardBoxComponentTitle from './CardBoxComponentTitle'
-import OverlayLayer from '../OverlayLayer'
+import OverlayLayer from '../Overlay/OverlayLayer'
 
 type Props = {
   title: string

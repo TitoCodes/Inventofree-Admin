@@ -2,7 +2,7 @@ import Head from 'next/head'
 import React, { ReactElement } from 'react'
 import CardBox from '../components/CardBox/CardBox'
 import LayoutAuthenticated from '../layouts/Authenticated'
-import SectionMain from '../components/SectionMain'
+import SectionMain from '../components/Section/SectionMain'
 import TableAuditTrails from '../components/Table/TableAuditTrails'
 import { getPageTitle } from '../config'
 

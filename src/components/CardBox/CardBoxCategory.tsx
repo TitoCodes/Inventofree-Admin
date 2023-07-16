@@ -2,8 +2,8 @@ import { mdiTrendingDown, mdiTrendingNeutral, mdiTrendingUp } from '@mdi/js'
 import React from 'react'
 import { Category } from '../../interfaces'
 import CardBox from '../CardBox/CardBox'
-import PillTag from '../PillTag'
-import UserAvatar from '../UserAvatar'
+import PillTag from '../PillTag/PillTag'
+import UserAvatar from '../User/UserAvatar'
 
 type Props = {
   category: Category

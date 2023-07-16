@@ -1,14 +1,14 @@
 import { mdiTrashCan, mdiPencil } from '@mdi/js'
 import React, { useState } from 'react'
 import { Item, UpdateItem } from '../../interfaces'
-import BaseButton from '../BaseButton'
-import BaseButtons from '../BaseButtons'
+import BaseButton from '../Button/BaseButton'
+import BaseButtons from '../Button/BaseButtons'
 import CardBoxModal from '../CardBox/CardBoxModal'
 import CardBoxEditModal from '../CardBox/CardBoxEditModal'
-import FormField from '../FormField'
+import FormField from '../Form/FormField'
 import { Formik, Form, Field } from 'formik'
 import { getCategories } from '../../hooks/categoriesData'
-import BaseDivider from '../BaseDivider'
+import BaseDivider from '../Divider/BaseDivider'
 
 const Tableitems = ({ data, onUpdateSave }) => {
   const [isEditModalInfoActive, setEditModalActive] = useState(false)
