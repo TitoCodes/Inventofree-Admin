@@ -5,7 +5,7 @@ export default async function UpdateItem(req, res) {
   const agent = new https.Agent({
     rejectUnauthorized: false,
   })
-  console.log(req.body,'inner')
+  
   return axios
     .put(process.env.API_URL + '/api/items', req.body, { httpsAgent: agent })
     .then(function (response) {

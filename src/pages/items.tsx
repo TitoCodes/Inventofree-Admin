@@ -9,7 +9,7 @@ import { getPageTitle } from '../config'
 import BaseButton from '../components/BaseButton'
 import CardBoxAddItemForm from '../components/CardBox/CardBoxAddItemForm'
 import { UpdateItem } from '../interfaces'
-import NotificationBar from '../components/NotificationBar'
+import { AddItem } from '../interfaces'
 import axios from 'axios'
 import NotificationError from '../components/Notification/NotificationError'
 import NotificationSuccess from '../components/Notification/NotificationSuccess'
@@ -20,16 +20,17 @@ const TablesPage = () => {
   const [showSuccessNotification, setShowSuccessNotification] = useState(false)
   const [showErrorNotification, setShowErroNotification] = useState(false)
   const [errorMessages, setErrorMessages] = useState([])
-  const [updatedItem, setUpdatedItem] = useState(null)
+  const [successNotificationMessage, setSuccessNotificationMessage] = useState(null)
 
   const handleUpdateItemSave = async (item: UpdateItem) => {
+    item.updatedBy = 1 //TODO: to update later with the user ID of the login user
     await axios
       .put('/inventofree-admin/api/items/update', item)
       .then((result: any) => {
         if (result.status == 200) {
           fetchRecords()
           setShowSuccessNotification(true)
-          setUpdatedItem(item.name)
+          setSuccessNotificationMessage('Successfully updated:' + item.name)
         } else {
           setShowErroNotification(true)
           setErrorMessages(result.response.data)
@@ -38,6 +39,27 @@ const TablesPage = () => {
       .catch((error) => {
         setShowErroNotification(true)
         setErrorMessages(error.response.data)
+      })
+  }
+
+  async function handleAddItemSave(itemToAdd: AddItem) {
+    await axios
+      .post('/inventofree-admin/api/items/add', itemToAdd)
+      .then((result: any) => {
+        if (result.status == 200) {
+          handleCloseAndRefresh()
+          setShowSuccessNotification(true)
+          setSuccessNotificationMessage('Successfully added:' + itemToAdd.name)
+        } else {
+          setShowErroNotification(true)
+          setErrorMessages(result.response.data)
+          setIsModalAddItemActive(false)
+        }
+      })
+      .catch((error) => {
+        setShowErroNotification(true)
+        setErrorMessages(error.response.data)
+        setIsModalAddItemActive(false)
       })
   }
 
@@ -88,13 +110,16 @@ const TablesPage = () => {
         <title>{getPageTitle('Items')}</title>
       </Head>
       <SectionMain>
-        <NotificationSuccess isActive={showSuccessNotification} data={updatedItem} />
+        <NotificationSuccess
+          isActive={showSuccessNotification}
+          message={successNotificationMessage}
+        />
         <NotificationError errorMessages={errorMessages} isActive={showErrorNotification} />
         <CardBoxAddItemForm
           title="Add Item"
           isActive={isModalAddItemActive}
           onCancel={() => setIsModalAddItemActive(false)}
-          onCloseAndRefresh={() => handleCloseAndRefresh()}
+          onSave={handleAddItemSave}
         />
 
         <h2 className="text-xl font-bold pb-3">Items</h2>

@@ -5,7 +5,7 @@ import { mdiCheckCircle } from '@mdi/js'
 type Props = {
   errorMessages?: any[]
   isActive?: boolean
-  data?:string
+  message?:string
 }
 
 const NotificationSuccess = (props: Props) => {
@@ -20,7 +20,7 @@ const NotificationSuccess = (props: Props) => {
           outline={true}
           isActive={props.isActive}
         >
-          <b>Successfully updated: {props.data}</b>
+          <b>{props.message}</b>
         </NotificationBase>
   )
 }

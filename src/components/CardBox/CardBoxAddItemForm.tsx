@@ -11,13 +11,12 @@ import BaseButtons from '../BaseButtons'
 import BaseDivider from '../BaseDivider'
 import { getCategories } from '../../hooks/categoriesData'
 import { Price } from '../../interfaces'
-import { saveItem } from '../../hooks/saveItem'
 
 type Props = {
   title: string
   isActive: boolean
   onCancel?: () => void
-  onCloseAndRefresh?: () => void
+  onSave?: (itemToAdd:AddItem) => void
 }
 
 const CardBoxAddItemForm = (props: Props) => {
@@ -37,10 +36,8 @@ const CardBoxAddItemForm = (props: Props) => {
     createdBy: 1,
   }
 
-  function save(item: AddItem) {
-    saveItem(item).then(() => {
-      props.onCloseAndRefresh()
-    })
+  async function save(itemToAdd: AddItem) {
+    props.onSave(itemToAdd);
   }
 
   return (
@@ -90,7 +87,6 @@ const CardBoxAddItemForm = (props: Props) => {
               <FormField label="Amount" labelFor="amount">
                 <Field name="price.amount" placeholder="Amount" id="price.amount" />
               </FormField>
-              <BaseDivider />
 
               <BaseButtons>
                 <BaseButton type="submit" color="info" label="Submit" />

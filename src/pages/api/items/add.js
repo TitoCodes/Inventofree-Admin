@@ -13,8 +13,7 @@ export default async function AddItems(req, res) {
         res.status(200).json(response.data)
       })
       .catch(function (error) {
-        // handle error
-        console.log(error)
+        res.status(500).json({ error: error.response.data.errors })
       })
       .finally(function () {})
   } catch (err) {

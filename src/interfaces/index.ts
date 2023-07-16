@@ -99,6 +99,7 @@ export type UpdateItem = {
   detail?: string
   price?: Price
   createdBy?: number
+  updatedBy?: number
 }
 
 export type Price = {

@@ -3,12 +3,11 @@ import Head from 'next/head'
 import React, { ReactElement } from 'react'
 import BaseButton from '../components/BaseButton'
 import CardBox from '../components/CardBox/CardBox'
-import CardBoxComponentEmpty from '../components/CardBoxComponentEmpty'
 import LayoutAuthenticated from '../layouts/Authenticated'
 import NotificationBar from '../components/NotificationBar'
 import SectionMain from '../components/SectionMain'
 import SectionTitleLineWithButton from '../components/SectionTitleLineWithButton'
-import TableCategories from '../components/TableCategories'
+import TableCategories from '../components/Table/TableCategories'
 import { getPageTitle } from '../config'
 
 const TablesPage = () => {
