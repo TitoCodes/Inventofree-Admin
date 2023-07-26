@@ -1,4 +1,4 @@
-import { mdiPlus, mdiCheckCircle, mdiAlert } from '@mdi/js'
+import { mdiPlus } from '@mdi/js'
 import Head from 'next/head'
 import React, { ReactElement, useEffect, useState } from 'react'
 import CardBox from '../components/CardBox/CardBox'

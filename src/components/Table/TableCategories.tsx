@@ -6,7 +6,7 @@ import BaseButton from '../Button/BaseButton'
 import BaseButtons from '../Button/BaseButtons'
 import CardBoxModal from '../CardBox/CardBoxModal'
 
-const TableCategories = () => {
+const TableCategories = ({data }) => {
   const { categories } = getCategories()
 
   const perPage = 5
@@ -71,7 +71,7 @@ const TableCategories = () => {
           </tr>
         </thead>
         <tbody>
-          {categories.map((category: Category) => (
+          {data.map((category: Category) => (
             <tr key={category.id}>
               <td data-label="Id">{category.id}</td>
               <td data-label="Name">{category.name}</td>

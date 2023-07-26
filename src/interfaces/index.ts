@@ -93,6 +93,12 @@ export type AddItem = {
   createdBy?: number
 }
 
+export type AddCategory = {
+  name?: string
+  description?: string
+  createdBy:number
+}
+
 export type UpdateItem = {
   id?:number
   name?: string
