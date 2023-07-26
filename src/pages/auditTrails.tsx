@@ -1,11 +1,9 @@
-import { mdiMonitorCellphone } from '@mdi/js'
 import Head from 'next/head'
 import React, { ReactElement } from 'react'
-import CardBox from '../components/CardBox'
+import CardBox from '../components/CardBox/CardBox'
 import LayoutAuthenticated from '../layouts/Authenticated'
-import NotificationBar from '../components/NotificationBar'
-import SectionMain from '../components/SectionMain'
-import TableAuditTrails from '../components/TableAuditTrails'
+import SectionMain from '../components/Section/SectionMain'
+import TableAuditTrails from '../components/Table/TableAuditTrails'
 import { getPageTitle } from '../config'
 
 const TablesPage = () => {

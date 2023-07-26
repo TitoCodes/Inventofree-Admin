@@ -1,14 +1,13 @@
 import { mdiGithub, mdiMonitorCellphone, mdiTableBorder, mdiTableOff } from '@mdi/js'
 import Head from 'next/head'
 import React, { ReactElement } from 'react'
-import BaseButton from '../components/BaseButton'
-import CardBox from '../components/CardBox'
-import CardBoxComponentEmpty from '../components/CardBoxComponentEmpty'
+import BaseButton from '../components/Button/BaseButton'
+import CardBox from '../components/CardBox/CardBox'
 import LayoutAuthenticated from '../layouts/Authenticated'
-import NotificationBar from '../components/NotificationBar'
+import NotificationBar from '../components/Notification/NotificationBar'
 import SectionMain from '../components/SectionMain'
 import SectionTitleLineWithButton from '../components/SectionTitleLineWithButton'
-import TableCategories from '../components/TableCategories'
+import TableCategories from '../components/Table/TableCategories'
 import { getPageTitle } from '../config'
 
 const TablesPage = () => {
