@@ -12,6 +12,7 @@ import axios from 'axios'
 import { AddCategory } from '../interfaces'
 import CardBoxAddCategoryForm from '../components/CardBox/CardBoxAddCategoryForm'
 import BaseButton from '../components/Button/BaseButton'
+import { UpdateCategory } from '../interfaces'
 
 const TablesPage = () => {
   const [currentCategory, setCurrentCategory] = useState([])
@@ -40,6 +41,45 @@ const TablesPage = () => {
     setIsModalAddCategoryActive(false)
   }
 
+  const handleUpdateSave = async (category: UpdateCategory) => {
+    category.updatedBy = 1 //TODO: to update later with the user ID of the login user
+    await axios
+      .put('/inventofree-admin/api/categories/update', category)
+      .then((result: any) => {
+        if (result.status == 200) {
+          fetchRecords()
+          setShowSuccessNotification(true)
+          setSuccessNotificationMessage('Successfully updated:' + category.name)
+        } else {
+          setShowErroNotification(true)
+          setErrorMessages(result.response.data)
+        }
+      })
+      .catch((error) => {
+        setShowErroNotification(true)
+        setErrorMessages(error.response.data)
+      })
+  }
+
+  const handleDelete = async (categoryId: number) => {
+    await axios
+      .delete('/inventofree-admin/api/categories/delete/' + categoryId)
+      .then((result: any) => {
+        if (result.status == 200) {
+          fetchRecords()
+          setShowSuccessNotification(true)
+          setSuccessNotificationMessage('Successfully deleted category Id:' + categoryId)
+        } else {
+          setShowErroNotification(true)
+          setErrorMessages(result.response.data)
+        }
+      })
+      .catch((error) => {
+        setShowErroNotification(true)
+        setErrorMessages(error.response.data)
+      })
+  }
+
   async function handleAddCategorySave(categoryToAdd: AddCategory) {
     await axios
       .post('/inventofree-admin/api/categories/add', categoryToAdd)
@@ -65,6 +105,25 @@ const TablesPage = () => {
     fetchRecords()
   }, [])
 
+
+  useEffect(() => {
+    if (showSuccessNotification) {
+      const timer = setTimeout(() => {
+        setShowSuccessNotification(false)
+      }, 3000)
+      return () => clearTimeout(timer)
+    }
+  }, [showSuccessNotification])
+
+  useEffect(() => {
+    if (showErrorNotification) {
+      const timer = setTimeout(() => {
+        setShowErroNotification(false)
+      }, 8000)
+      return () => clearTimeout(timer)
+    }
+  }, [showErrorNotification])
+  
   return (
     <>
       <Head>
@@ -84,7 +143,7 @@ const TablesPage = () => {
         />
 
         <h2 className="text-xl font-bold p-5">Categories</h2>
-   <BaseButton
+   <BaseButton 
           color="info"
           label="Add Category"
           icon={mdiPlus}
@@ -93,7 +152,7 @@ const TablesPage = () => {
           className="mb-5"
         />
         <CardBox className="mb-6" hasTable>
-          <TableCategories data={currentCategory} />
+          <TableCategories data={currentCategory} handleUpdateSave={handleUpdateSave} onConfirmDelete={handleDelete} />
         </CardBox>
       </SectionMain>
     </>
