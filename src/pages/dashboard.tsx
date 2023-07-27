@@ -115,12 +115,6 @@ const Dashboard = () => {
         </SectionTitleLineWithButton>
 
         <CardBox className="mb-6">{chartData && <ChartLineSample data={chartData} />}</CardBox>
-
-        <SectionTitleLineWithButton icon={mdiBookAccount} title="Categories" />
-
-        <CardBox hasTable>
-          <TableCategories />
-        </CardBox>
       </SectionMain>
     </>
   )
