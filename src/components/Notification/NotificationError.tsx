@@ -12,8 +12,13 @@ function ErrorListComponent({ error }) {
   const errorMessages = []
 
   errorProperties.forEach((property) => {
-    const messages = error.error[property] || []
-    errorMessages.push(...messages)
+    if(property === 'errorMessage'){
+      errorMessages.push(error.error[property])
+    }
+    else{
+      const messages = error.error[property] || []
+      errorMessages.push(...messages)
+    }
   })
 
   return (
@@ -35,7 +40,7 @@ const NotificationError = (props: Props) => {
   return (
     <NotificationBase color="danger" icon={mdiAlert} outline={true} isActive={props.isActive}>
       <b>
-        Error saving:
+        Error in operation:
         <ErrorListComponent error={props.errorMessages} />
       </b>
     </NotificationBase>

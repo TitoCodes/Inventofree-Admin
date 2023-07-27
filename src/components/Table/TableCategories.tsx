@@ -1,12 +1,15 @@
-import { mdiEye, mdiTrashCan } from '@mdi/js'
+import { mdiPencil, mdiTrashCan } from '@mdi/js'
 import React, { useState } from 'react'
 import { getCategories } from '../../hooks/categoriesData'
-import { Category } from '../../interfaces'
+import { Category, UpdateCategory } from '../../interfaces'
 import BaseButton from '../Button/BaseButton'
 import BaseButtons from '../Button/BaseButtons'
 import CardBoxModal from '../CardBox/CardBoxModal'
+import CardBoxEditModal from '../CardBox/CardBoxEditModal'
+import FormField from '../Form/FormField'
+import { Formik, Form, Field } from 'formik'
 
-const TableCategories = () => {
+const TableCategories = ({ data, handleUpdateSave, onConfirmDelete }) => {
   const { categories } = getCategories()
 
   const perPage = 5
@@ -23,42 +26,81 @@ const TableCategories = () => {
     pagesList.push(i)
   }
 
-  const [isModalInfoActive, setIsModalInfoActive] = useState(false)
+  const [isEditModalInfoActive, setEditModalActive] = useState(false)
+  const [editCategory, setEditCategory] = useState<UpdateCategory>(null)
+  const [categoryIdToDelete, setCategoryIdToDelete] = useState(null)
+  const [deleteConfirmationMessage, setDeleteConfirmationMessage] = useState(null)
   const [isModalTrashActive, setIsModalTrashActive] = useState(false)
 
   const handleModalAction = () => {
-    setIsModalInfoActive(false)
     setIsModalTrashActive(false)
   }
 
+  const handleDelete = (categoryId: number) => {
+    setIsModalTrashActive(true)
+    setCategoryIdToDelete(categoryId)
+    setDeleteConfirmationMessage('Are you sure you want to delete category:' + categoryId)
+  }
+
+  const handleEditCategory = (category: Category) => {
+    setEditModalActive(true)
+    setEditCategory(category)
+  }
+
+  const handleSave = (category: UpdateCategory) => {
+    handleUpdateSave(category)
+    setEditModalActive(false)
+  }
+
+  const handleCancelAction = () => {
+    setEditModalActive(false)
+  }
+
+  const handleOnConfirmDelete = (categoryId: number) => {
+    onConfirmDelete(categoryId)
+    setIsModalTrashActive(false)
+  }
   return (
     <>
-      <CardBoxModal
-        title="Sample modal"
+      <CardBoxEditModal
+        title="Edit item"
         buttonColor="info"
         buttonLabel="Done"
-        isActive={isModalInfoActive}
+        isActive={isEditModalInfoActive}
         onConfirm={handleModalAction}
-        onCancel={handleModalAction}
+        onCancel={handleCancelAction}
       >
-        <p>
-          Lorem ipsum dolor sit amet <b>adipiscing elit</b>
-        </p>
-        <p>This is sample modal</p>
-      </CardBoxModal>
+        <Formik initialValues={editCategory} onSubmit={(category) => handleSave(category)}>
+          <Form>
+            <FormField label="Name" labelFor="name">
+              <Field name="name" placeholder="Category Name" id="name" />
+            </FormField>
+            <FormField label="Description" labelFor="description">
+              <Field name="description" placeholder="Description" id="description" />
+            </FormField>
 
+            <BaseButtons>
+              <BaseButton color="info" label="Save" type="submit" />
+              <BaseButton
+                type="cancel"
+                color="info"
+                outline
+                label="Cancel"
+                onClick={handleCancelAction}
+              />
+            </BaseButtons>
+          </Form>
+        </Formik>
+      </CardBoxEditModal>
       <CardBoxModal
         title="Please confirm"
         buttonColor="danger"
         buttonLabel="Confirm"
         isActive={isModalTrashActive}
-        onConfirm={handleModalAction}
+        onConfirm={() => handleOnConfirmDelete(categoryIdToDelete)}
         onCancel={handleModalAction}
       >
-        <p>
-          Lorem ipsum dolor sit amet <b>adipiscing elit</b>
-        </p>
-        <p>This is sample modal</p>
+        <p>{deleteConfirmationMessage}</p>
       </CardBoxModal>
 
       <table>
@@ -67,11 +109,12 @@ const TableCategories = () => {
             <th>Id</th>
             <th>Name</th>
             <th>Description</th>
-            <th>Created Date</th>
+            <th>Date Created</th>
+            <th>Date Modified</th>
           </tr>
         </thead>
         <tbody>
-          {categories.map((category: Category) => (
+          {data.map((category: Category) => (
             <tr key={category.id}>
               <td data-label="Id">{category.id}</td>
               <td data-label="Name">{category.name}</td>
@@ -79,18 +122,21 @@ const TableCategories = () => {
               <td data-label="Created" className="lg:w-1 whitespace-nowrap">
                 <small className="text-gray-500 dark:text-slate-400">{category.createdDate}</small>
               </td>
+              <td data-label="Modified" className="lg:w-1 whitespace-nowrap">
+                <small className="text-gray-500 dark:text-slate-400">{category.modifiedDate}</small>
+              </td>
               <td className="before:hidden lg:w-1 whitespace-nowrap">
                 <BaseButtons type="justify-start lg:justify-end" noWrap>
                   <BaseButton
                     color="info"
-                    icon={mdiEye}
-                    onClick={() => setIsModalInfoActive(true)}
+                    icon={mdiPencil}
+                    onClick={() => handleEditCategory(category)}
                     small
                   />
                   <BaseButton
                     color="danger"
                     icon={mdiTrashCan}
-                    onClick={() => setIsModalTrashActive(true)}
+                    onClick={() => handleDelete(category.id)}
                     small
                   />
                 </BaseButtons>
@@ -99,25 +145,6 @@ const TableCategories = () => {
           ))}
         </tbody>
       </table>
-      {/* <div className="p-3 lg:px-6 border-t border-gray-100 dark:border-slate-800">
-        <div className="flex flex-col md:flex-row items-center justify-between py-3 md:py-0">
-          <BaseButtons>
-            {pagesList.map((page) => (
-              <BaseButton
-                key={page}
-                active={page === currentPage}
-                label={page + 1}
-                color={page === currentPage ? 'lightDark' : 'whiteDark'}
-                small
-                onClick={() => setCurrentPage(page)}
-              />
-            ))}
-          </BaseButtons>
-          <small className="mt-6 md:mt-0">
-            Page {currentPage + 1} of {numPages}
-          </small>
-        </div>
-      </div> */}
     </>
   )
 }
