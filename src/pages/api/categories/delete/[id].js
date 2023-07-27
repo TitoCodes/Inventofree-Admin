@@ -16,7 +16,7 @@ export default (req, res)  => {
       res.status(200).json()
     })
     .catch(function (error) {
-      res.status(500).json({ error: error.response.data.errors })
+      res.status(400).json({ error: error.response.data.errors })
     })
     .finally(function () {})
 }
