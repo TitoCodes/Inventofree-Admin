@@ -40,7 +40,7 @@ const Tableitems = ({ data, onUpdateSave, onConfirmDelete }) => {
     setDeleteConfirmationMessage('Are you sure you want to delete item:' + itemId)
   }
 
-  const handleOnConfirmDelete = (itemId:number) =>{
+  const handleOnConfirmDelete = (itemId: number) => {
     onConfirmDelete(itemId)
     setIsModalTrashActive(false)
   }
@@ -81,6 +81,9 @@ const Tableitems = ({ data, onUpdateSave, onConfirmDelete }) => {
             <FormField label="Detail" hasTextareaHeight>
               <Field name="detail" as="textarea" placeholder="Item Details" />
             </FormField>
+            <FormField label="Quantity">
+              <Field name="quantity" placeholder="Quantity" id="quantity" />
+            </FormField>
 
             <FormField label="Amount" labelFor="amount">
               <Field name="price.amount" placeholder="Amount" id="price.amount" />
@@ -115,8 +118,10 @@ const Tableitems = ({ data, onUpdateSave, onConfirmDelete }) => {
             <th>Name</th>
             <th>Detail</th>
             <th>Amount</th>
+            <th>Quantity</th>
             <th>Category</th>
-            <th>Created Date</th>
+            <th>Date Created</th>
+            <th>Date Modified</th>
           </tr>
         </thead>
         <tbody>
@@ -126,9 +131,17 @@ const Tableitems = ({ data, onUpdateSave, onConfirmDelete }) => {
               <td data-label="Name">{item.name}</td>
               <td data-label="Description">{item.detail}</td>
               <td data-label="Amount">{item.price.amount}</td>
+              <td data-label="Quantity">{item.quantity}</td>
               <td data-label="Category">{item.category.name}</td>
               <td data-label="Created Date" className="lg:w-1 whitespace-nowrap">
-                <small className="text-gray-500 dark:text-slate-400">{item.createdDate}</small>
+                <small className="text-gray-500 dark:text-slate-400">
+                  {new Date(item.createdDate).toLocaleString()}
+                </small>
+              </td>
+              <td data-label="Modified Date" className="lg:w-1 whitespace-nowrap">
+                <small className="text-gray-500 dark:text-slate-400" >
+                {item.modifiedDate !== null ? new Date(item.modifiedDate).toLocaleString() : null}
+                </small>
               </td>
               <td className="before:hidden lg:w-1 whitespace-nowrap">
                 <BaseButtons type="justify-start lg:justify-end" noWrap>

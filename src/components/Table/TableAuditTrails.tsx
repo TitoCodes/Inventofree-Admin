@@ -62,17 +62,17 @@ const TableAuditTrails = () => {
           </tr>
         </thead>
         <tbody>
-          {auditTrails.map((item: AuditTrail) => (
-            <tr key={item.id}>
-              <td data-label="Id">{item.id}</td>
-              <td data-label="Action">{item.action}</td>
-              <td data-label="Created By">{item.createdBy}</td>
+          {auditTrails.map((auditTrail: AuditTrail) => (
+            <tr key={auditTrail.id}>
+              <td data-label="Id">{auditTrail.id}</td>
+              <td data-label="Action">{auditTrail.action}</td>
+              <td data-label="Created By">{auditTrail.createdBy}</td>
               <td className="before:hidden lg:w-1 whitespace-nowrap">
                 <BaseButtons type="justify-start lg:justify-end" noWrap>
                   <BaseButton
                     color="info"
                     icon={mdiEye}
-                    onClick={() => handleViewDetail(item.details, item.action)}
+                    onClick={() => handleViewDetail(auditTrail.details, auditTrail.action)}
                     small
                   />
                 </BaseButtons>
