@@ -1,46 +1,40 @@
 import {
-  mdiAccountMultiple,
   mdiCartOutline,
-  mdiChartPie,
   mdiChartTimelineVariant,
   mdiGithub,
-  mdiBookAccount,
-  mdiReload,
+  mdiPackageVariantClosed,
 } from '@mdi/js'
 import Head from 'next/head'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import type { ReactElement } from 'react'
 import BaseButton from '../components/Button/BaseButton'
 import LayoutAuthenticated from '../layouts/Authenticated'
 import SectionMain from '../components/Section/SectionMain'
 import SectionTitleLineWithButton from '../components/Section/SectionTitleLineWithButton'
 import CardBoxWidget from '../components/CardBox/CardBoxWidget'
-import { getItems } from '../hooks/itemsData'
-import { getCategories} from '../hooks/categoriesData'
-import CardBoxItem from '../components/CardBox/CardBoxItem'
-import { Category, Item } from '../interfaces'
-import CardBoxClient from '../components/CardBox/CardBoxCategory'
 import SectionBannerStarOnGitHub from '../components/Section/SectionBannerStarOnGitHub'
-import CardBox from '../components/CardBox/CardBox'
-import { sampleChartData } from '../components/ChartLineSample/config'
-import ChartLineSample from '../components/ChartLineSample'
-import TableCategories from '../components/Table/TableCategories'
 import { getPageTitle } from '../config'
 
 const Dashboard = () => {
-  const { categories } = getCategories()
-  const { items } = getItems()
+  const [totalItems, setTotalItems] = useState(0)
 
-  const categoriesListed
-   = categories.slice(0, 4)
-
-  const [chartData, setChartData] = useState(sampleChartData())
-
-  const fillChartData = (e: React.MouseEvent) => {
-    e.preventDefault()
-
-    setChartData(sampleChartData())
+  const fetchTotalItems = async () => {
+    try {
+      try {
+        const res = await fetch('/inventofree-admin/api/items/count')
+        const json = await res.json()
+        setTotalItems(json)
+      } catch (error) {
+        console.log(error)
+      }
+    } catch (error) {
+      console.error('Error retrieving total items:', error)
+    }
   }
+
+  useEffect(() => {
+    fetchTotalItems()
+  }, [])
 
   return (
     <>
@@ -66,37 +60,37 @@ const Dashboard = () => {
 
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-3 mb-6">
           <CardBoxWidget
-            trendLabel="12%"
-            trendType="up"
+            // trendLabel="12%"
+            // trendType="up"
             trendColor="success"
-            icon={mdiAccountMultiple}
+            icon={mdiPackageVariantClosed}
             iconColor="success"
-            number={512}
-            label="Categories"
+            number={totalItems}
+            label="Total Inventory"
           />
           <CardBoxWidget
-            trendLabel="16%"
-            trendType="down"
-            trendColor="danger"
+            // trendLabel="16%"
+            // trendType="down"
+            // trendColor="danger"
             icon={mdiCartOutline}
             iconColor="info"
-            number={7770}
-            numberPrefix="$"
-            label="Sales"
+            number={2500}
+            numberPrefix="₱"
+            label="Sales Today"
           />
           <CardBoxWidget
-            trendLabel="Overflow"
-            trendType="warning"
-            trendColor="warning"
+            // trendLabel="Overflow"
+            // trendType="warning"
+            // trendColor="warning"
             icon={mdiChartTimelineVariant}
-            iconColor="danger"
-            number={256}
-            numberSuffix="%"
-            label="Performance"
+            iconColor="success"
+            number={55000}
+            numberPrefix="₱"
+            label="Monthly Sales"
           />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+        {/* <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
           <div className="flex flex-col justify-between">
             {items.map((item: Item) => (
               <CardBoxItem key={item.id} item={item} />
@@ -108,13 +102,13 @@ const Dashboard = () => {
               <CardBoxClient key={category.id} category={category} />
             ))}
           </div>
-        </div>
+        </div> */}
 
-        <SectionTitleLineWithButton icon={mdiChartPie} title="Trends overview">
+        {/* <SectionTitleLineWithButton icon={mdiChartPie} title="Trends overview">
           <BaseButton icon={mdiReload} color="whiteDark" onClick={fillChartData} />
         </SectionTitleLineWithButton>
 
-        <CardBox className="mb-6">{chartData && <ChartLineSample data={chartData} />}</CardBox>
+        <CardBox className="mb-6">{chartData && <ChartLineSample data={chartData} />}</CardBox> */}
       </SectionMain>
     </>
   )

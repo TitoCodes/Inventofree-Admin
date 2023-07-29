@@ -79,6 +79,7 @@ export type Item = {
   detail: string
   category: Category
   price: Price
+  quantity:number
   createdDate: string
   createdBy: number
   modifiedDate: string
@@ -89,6 +90,7 @@ export type AddItem = {
   name?: string
   detail?: string
   categoryId?: Category
+  quantity?: number
   price?: Price
   createdBy?: number
 }
@@ -110,6 +112,7 @@ export type UpdateItem = {
   name?: string
   detail?: string
   price?: Price
+  quantity?: number
   createdBy?: number
   updatedBy?: number
 }

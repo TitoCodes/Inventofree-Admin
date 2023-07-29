@@ -16,7 +16,7 @@ type Props = {
   title: string
   isActive: boolean
   onCancel?: () => void
-  onSave?: (itemToAdd:AddItem) => void
+  onSave?: (itemToAdd: AddItem) => void
 }
 
 const CardBoxAddItemForm = (props: Props) => {
@@ -37,7 +37,7 @@ const CardBoxAddItemForm = (props: Props) => {
   }
 
   async function save(itemToAdd: AddItem) {
-    props.onSave(itemToAdd);
+    props.onSave(itemToAdd)
   }
 
   return (
@@ -83,7 +83,9 @@ const CardBoxAddItemForm = (props: Props) => {
               <FormField label="Detail" hasTextareaHeight>
                 <Field name="detail" as="textarea" placeholder="Item Details" />
               </FormField>
-
+              <FormField label="Quantity">
+                <Field name="quantity" placeholder="Quantity" id="quantity" />
+              </FormField>
               <FormField label="Amount" labelFor="amount">
                 <Field name="price.amount" placeholder="Amount" id="price.amount" />
               </FormField>

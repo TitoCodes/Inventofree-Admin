@@ -120,10 +120,16 @@ const TableCategories = ({ data, handleUpdateSave, onConfirmDelete }) => {
               <td data-label="Name">{category.name}</td>
               <td data-label="Description">{category.description}</td>
               <td data-label="Created" className="lg:w-1 whitespace-nowrap">
-                <small className="text-gray-500 dark:text-slate-400">{category.createdDate}</small>
+                <small className="text-gray-500 dark:text-slate-400">
+                  {new Date(category.createdDate).toLocaleString()}
+                </small>
               </td>
               <td data-label="Modified" className="lg:w-1 whitespace-nowrap">
-                <small className="text-gray-500 dark:text-slate-400">{category.modifiedDate}</small>
+                <small className="text-gray-500 dark:text-slate-400">
+                  {category.modifiedDate !== null
+                    ? new Date(category.modifiedDate).toLocaleString()
+                    : null}
+                </small>
               </td>
               <td className="before:hidden lg:w-1 whitespace-nowrap">
                 <BaseButtons type="justify-start lg:justify-end" noWrap>
